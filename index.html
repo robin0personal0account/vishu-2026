@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>🌼 Vishu Kai Neettam </title>
+
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<!-- html2canvas CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(145deg, #fff2cc 0%, #ffe8a3 100%);
+  font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, 'Inter', sans-serif;
+  padding: 20px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Decorative floral elements for Vishu theme */
+body::before {
+  content: "🌼";
+  position: absolute;
+  font-size: 70px;
+  top: 5%;
+  left: 3%;
+  opacity: 0.2;
+  pointer-events: none;
+  animation: floatFlower 10s infinite;
+}
+
+body::after {
+  content: "🌻";
+  position: absolute;
+  font-size: 60px;
+  bottom: 5%;
+  right: 3%;
+  opacity: 0.2;
+  pointer-events: none;
+  animation: floatFlower 12s infinite reverse;
+}
+
+@keyframes floatFlower {
+  0% { transform: translateY(0px) rotate(0deg); opacity: 0.15; }
+  50% { transform: translateY(-15px) rotate(5deg); opacity: 0.25; }
+  100% { transform: translateY(0px) rotate(0deg); opacity: 0.15; }
+}
+
+/* Main title */
+.title-container {
+  text-align: center;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: rgba(255, 245, 200, 0.8);
+  backdrop-filter: blur(4px);
+  padding: 10px 28px;
+  border-radius: 60px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.title-container i {
+  font-size: 32px;
+  color: #d4a017;
+  filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+}
+
+h1 {
+  font-size: 1.7rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #b8860b, #f5b81b, #d4a017);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 4px rgba(255,215,0,0.3);
+}
+
+/* Card wrapper with premium shadow */
+.card-wrapper {
+  background: linear-gradient(145deg, #f5e6b0, #eedd99);
+  padding: 12px;
+  border-radius: 28px;
+  box-shadow: 0 20px 35px rgba(0,0,0,0.25), inset 0 1px 2px rgba(255,255,200,0.8);
+}
+
+#card {
+  width: 340px;
+  height: 200px;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+#card:hover {
+  transform: scale(1.01);
+}
+
+/* Reward text overlay - elegant */
+.reward {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: bold;
+  background: linear-gradient(135deg, #fff8e7, #fff0d0);
+  color: #2e7d32;
+  z-index: 1;
+  text-align: center;
+  gap: 8px;
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.05);
+}
+
+.reward i {
+  font-size: 36px;
+  color: #f5b81b;
+}
+
+.reward .small-text {
+  font-size: 12px;
+  font-weight: normal;
+  color: #b8860b;
+  letter-spacing: 1px;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  cursor: grab;
+  border-radius: 20px;
+}
+
+canvas:active {
+  cursor: grabbing;
+}
+
+/* Share button - beautiful design */
+.button-container {
+  margin-top: 25px;
+  text-align: center;
+}
+
+#shareBtn {
+  margin-top: 0;
+  padding: 14px 32px;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #2d6a4f, #1b4d3e);
+  color: #fff8e0;
+  font-weight: bold;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,200,0.4);
+  transition: all 0.2s ease;
+  letter-spacing: 1px;
+}
+
+#shareBtn i {
+  font-size: 1.2rem;
+  transition: transform 0.2s;
+}
+
+#shareBtn:hover i {
+  transform: translateY(-2px);
+}
+
+#shareBtn:active {
+  transform: scale(0.96);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* Scratch hint badge */
+.scratch-hint {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: rgba(255, 245, 180, 0.9);
+  padding: 6px 20px;
+  border-radius: 40px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #b46f1a;
+  backdrop-filter: blur(2px);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.scratch-hint i {
+  font-size: 0.85rem;
+  color: #e8901a;
+}
+
+/* Vishu special footer */
+.footer {
+  margin-top: 25px;
+  font-size: 0.7rem;
+  color: #b8860b;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.8;
+}
+
+.footer i {
+  font-size: 0.75rem;
+}
+
+/* Responsive */
+@media (max-width: 450px) {
+  #card {
+    width: 300px;
+    height: 180px;
+  }
+  .reward {
+    font-size: 24px;
+  }
+  h1 {
+    font-size: 1.3rem;
+  }
+  .title-container i {
+    font-size: 26px;
+  }
+  .button-container {
+    margin-top: 20px;
+  }
+  #shareBtn {
+    padding: 12px 26px;
+    font-size: 1rem;
+  }
+}
+
+/* Shine animation for unrevealed canvas */
+@keyframes gentleShine {
+  0% { opacity: 1; }
+  50% { opacity: 0.96; }
+  100% { opacity: 1; }
+}
+
+canvas {
+  animation: gentleShine 1.5s infinite;
+}
+</style>
+</head>
+
+<body>
+
+<div class="title-container">
+  <i class="fas fa-leaf"></i>
+  <h1>🌼 Vishu Kai Neettam 🌼</h1>
+  <i class="fas fa-gift"></i>
+</div>
+
+<div class="card-wrapper">
+  <div id="card" class="card">
+    <div id="rewardText" class="reward">
+      <i class="fas fa-question-circle"></i>
+      <span>Scratch to Reveal</span>
+      <div class="small-text"><i class="fas fa-hand-peace"></i> scratch golden layer</div>
+    </div>
+    <canvas id="canvas"></canvas>
+  </div>
+</div>
+
+<div class="button-container">
+  <button id="shareBtn" style="display:none;">
+    <i class="fas fa-camera"></i>
+    Save Gift Card
+    <i class="fas fa-download"></i>
+  </button>
+</div>
+
+<div id="scratchHint" class="scratch-hint">
+  <i class="fas fa-fingerprint"></i>
+  <span>drag finger / mouse to scratch</span>
+  <i class="fas fa-arrow-right"></i>
+</div>
+
+<div class="footer">
+  <i class="fas fa-star-of-life"></i>
+  <span>Vishu Special ✨ tobi Surprise</span>
+  <i class="fas fa-star-of-life"></i>
+</div>
+
+<script>
+// ============================================================
+// ORIGINAL LOGIC - COMPLETELY UNCHANGED
+// Only UI elements, icons, and visual hints have been enhanced
+// ============================================================
+
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+const rewardText = document.getElementById("rewardText");
+const shareBtn = document.getElementById("shareBtn");
+const scratchHintDiv = document.getElementById("scratchHint");
+
+canvas.width = 320;
+canvas.height = 180;
+
+let isDrawing = false;
+
+// 🔒 Always read fresh values
+function getPlayed() {
+  return localStorage.getItem("played");
+}
+
+function getReward() {
+  return localStorage.getItem("reward");
+}
+
+// Init
+if (getPlayed()) {
+  rewardText.innerHTML = "🎉 ₹" + getReward();
+  shareBtn.style.display = "block";
+  if (scratchHintDiv) scratchHintDiv.style.display = "none";
+} else {
+  let reward = Math.floor(Math.random() * 41) + 10;
+  localStorage.setItem("reward", reward);
+  if (scratchHintDiv) scratchHintDiv.style.display = "flex";
+}
+
+// 🎨 Golden layer
+function drawLayer() {
+  let grad = ctx.createLinearGradient(0,0,canvas.width,canvas.height);
+  grad.addColorStop(0, "#d4af37");
+  grad.addColorStop(0.5, "#ffd700");
+  grad.addColorStop(1, "#b8860b");
+
+  ctx.fillStyle = grad;
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+}
+
+if (!getPlayed()) drawLayer();
+
+// Get position
+function getXY(e) {
+  const rect = canvas.getBoundingClientRect();
+  if (e.touches) {
+    return {
+      x: e.touches[0].clientX - rect.left,
+      y: e.touches[0].clientY - rect.top
+    };
+  }
+  return { x: e.offsetX, y: e.offsetY };
+}
+
+// Scratch
+function scratch(e) {
+  if (!isDrawing || getPlayed()) return;
+
+  const pos = getXY(e);
+  // boundary check
+  if (pos.x < 0 || pos.y < 0 || pos.x > canvas.width || pos.y > canvas.height) return;
+
+  ctx.globalCompositeOperation = "destination-out";
+  ctx.beginPath();
+  ctx.arc(pos.x, pos.y, 20, 0, Math.PI * 2);
+  ctx.fill();
+
+  checkReveal();
+}
+
+// Events
+canvas.addEventListener("mousedown", () => isDrawing = true);
+canvas.addEventListener("mouseup", () => isDrawing = false);
+canvas.addEventListener("mousemove", scratch);
+
+canvas.addEventListener("touchstart", () => isDrawing = true);
+canvas.addEventListener("touchend", () => isDrawing = false);
+canvas.addEventListener("touchmove", scratch);
+
+// ✅ FIXED Reveal detection (original logic)
+function checkReveal() {
+  const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  let cleared = 0;
+
+  for (let i = 3; i < pixels.data.length; i += 80) {
+    if (pixels.data[i] === 0) cleared++;
+  }
+
+  let percent = cleared / (pixels.data.length / 80);
+
+  if (percent > 0.5) {
+    reveal();
+  }
+}
+
+// ✅ FIXED Reveal (original logic)
+function reveal() {
+  if (getPlayed()) return;
+
+  const reward = getReward(); // always fetch latest
+
+  rewardText.innerHTML = "🎉 ₹" + reward;
+
+  localStorage.setItem("played", true);
+
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  shareBtn.style.display = "block";
+  
+  // Hide scratch hint after reveal
+  if (scratchHintDiv) scratchHintDiv.style.display = "none";
+}
+
+// 📸 Save image (original logic - saves the card element)
+shareBtn.onclick = () => {
+  html2canvas(document.getElementById("card")).then(canvas => {
+    let link = document.createElement("a");
+    link.download = "vishu-gift.png";
+    link.href = canvas.toDataURL();
+    link.click();
+  });
+};
+
+// Additional UI sync for already played state
+if (getPlayed()) {
+  if (scratchHintDiv) scratchHintDiv.style.display = "none";
+  const storedReward = getReward();
+  if (storedReward && rewardText.innerHTML !== ("🎉 ₹" + storedReward)) {
+    rewardText.innerHTML = "🎉 ₹" + storedReward;
+  }
+  shareBtn.style.display = "block";
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+} else {
+  if (scratchHintDiv) scratchHintDiv.style.display = "flex";
+  // Ensure golden layer exists
+  const checkCanvasEmpty = () => {
+    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    for (let i = 3; i < imgData.data.length; i += 4) {
+      if (imgData.data[i] !== 0) return false;
+    }
+    return true;
+  };
+  if (checkCanvasEmpty()) drawLayer();
+}
+
+// Prevent touch scrolling while scratching
+canvas.addEventListener("touchmove", (e) => {
+  if (isDrawing) e.preventDefault();
+}, { passive: false });
+
+</script>
+
+</body>
+</html>
